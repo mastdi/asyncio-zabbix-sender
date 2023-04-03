@@ -1,9 +1,9 @@
-import asyncio
 import struct
 import zlib
 
 import pytest
 
+from tests.mock import MockStreamReader
 from zabbix_sender import create_packet
 from zabbix_sender._protocol import PacketParts, parse_packet_parts, read_response
 
@@ -35,17 +35,6 @@ def test_create_packet_with_compression():
     assert data_length == len(expected_data)
     assert reserved == len(request)
     assert packet.endswith(expected_data)
-
-
-class MockStreamReader(asyncio.StreamReader):
-    def __init__(self, stream: bytes) -> None:
-        self._stream = stream
-        self._index = 0
-
-    async def readexactly(self, n: int) -> bytes:
-        part = self._stream[self._index : self._index + n]
-        self._index += n
-        return part
 
 
 @pytest.mark.asyncio
