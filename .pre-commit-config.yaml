@@ -1,0 +1,33 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-docstring-first
+    -   id: check-toml
+-   repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
+    hooks:
+    -   id: isort
+        args: ["--profile", "black"]
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: 'fde4bb9'
+    hooks:
+    -   id: mypy
+        args: [--ignore-missing-imports, --non-interactive, --install-types]
+        additional_dependencies: ["pydantic==1.10.4"]
+-   repo: https://github.com/PyCQA/flake8
+    rev: 5.0.4
+    hooks:
+    -   id: flake8
+        # black may raise E203 whitespace before ':' warnings in style guide enforcement
+        # tools like Flake8. Since E203 is not PEP 8 compliant, you should tell Flake8
+        # to ignore these warnings
+        args: ["--max-line-length=88", "--ignore=E203"]
+-   repo: https://github.com/psf/black
+    rev: 22.6.0
+    hooks:
+    -   id: black
