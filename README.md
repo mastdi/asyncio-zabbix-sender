@@ -9,7 +9,7 @@ Key features:
 ## Installation
 The package can be found on PyPI and installed using pip:
 ```commandline
-pip install zabbix-sender-asyncio
+pip install asyncio-zabbix-sender
 ```
 
 ## Usage
