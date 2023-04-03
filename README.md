@@ -9,14 +9,14 @@ Key features:
 ## Installation
 The package can be found on PyPI and installed using pip:
 ```commandline
-pip install zabbix-sender
+pip install zabbix-sender-asyncio
 ```
 
 ## Usage
 
 ```python
 import datetime
-from zabbix_sender import ZabbixSender, Measurements, Measurement
+from asyncio_zabbix_sender import ZabbixSender, Measurements, Measurement
 
 sender = ZabbixSender("example.com")
 

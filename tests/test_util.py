@@ -13,7 +13,7 @@
 #  limitations under the License.
 import datetime
 
-from zabbix_sender._util import split_datetime
+from asyncio_zabbix_sender._util import split_datetime
 
 
 def test_split_datetime():

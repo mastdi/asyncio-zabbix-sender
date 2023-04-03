@@ -16,7 +16,7 @@ import datetime
 import json
 import typing
 
-import zabbix_sender._util as _util
+import asyncio_zabbix_sender._util as _util
 
 
 @dataclasses.dataclass

@@ -16,9 +16,13 @@ import zlib
 
 import pytest
 
+from asyncio_zabbix_sender import create_packet
+from asyncio_zabbix_sender._protocol import (
+    PacketParts,
+    parse_packet_parts,
+    read_response,
+)
 from tests.mock import MockStreamReader
-from zabbix_sender import create_packet
-from zabbix_sender._protocol import PacketParts, parse_packet_parts, read_response
 
 
 def test_create_packet_without_compression():

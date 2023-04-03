@@ -13,7 +13,7 @@
 #  limitations under the License.
 import datetime
 
-from zabbix_sender import Measurement, Measurements
+from asyncio_zabbix_sender import Measurement, Measurements
 
 
 def test_measurement_with_datetime():

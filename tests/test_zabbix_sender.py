@@ -16,8 +16,8 @@ import json
 
 import pytest
 
+from asyncio_zabbix_sender import Measurements, ZabbixSender, create_packet
 from tests.mock import MockStreamReader, MockStreamWriter, create_open_connection_mock
-from zabbix_sender import Measurements, ZabbixSender, create_packet
 
 
 @pytest.mark.asyncio

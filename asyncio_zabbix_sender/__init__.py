@@ -11,9 +11,9 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-from zabbix_sender._measurements import Measurement, Measurements
-from zabbix_sender._protocol import create_packet
-from zabbix_sender._zabbix_sender import ZabbixSender
+from asyncio_zabbix_sender._measurements import Measurement, Measurements
+from asyncio_zabbix_sender._protocol import create_packet
+from asyncio_zabbix_sender._zabbix_sender import ZabbixSender
 
 __all__ = [
     "create_packet",

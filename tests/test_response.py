@@ -13,7 +13,7 @@
 #  limitations under the License.
 import decimal
 
-from zabbix_sender._response import response_from_payload
+from asyncio_zabbix_sender._response import response_from_payload
 
 
 def test_response_from_payload():

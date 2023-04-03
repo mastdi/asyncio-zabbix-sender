@@ -2,11 +2,11 @@
 name = "zabbix-sender"
 version = "0.1.0"
 description = "Asyncio implementation of the Zabbix Sender protocol"
-repository = "https://github.com/mastdi/zabbix-sender"
+repository = "https://github.com/mastdi/asyncio-zabbix-sender"
 authors = ["Martin Storgaard Dieu <martin@storgaarddieu.com>"]
 license = "Apache-2.0"
 readme = "README.md"
-packages = [{include = "zabbix_sender"}]
+packages = [{include = "asyncio_zabbix_sender"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"

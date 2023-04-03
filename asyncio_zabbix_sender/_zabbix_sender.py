@@ -14,9 +14,9 @@
 import asyncio
 import typing
 
-import zabbix_sender._measurements as _measurements
-import zabbix_sender._protocol as _protocol
-import zabbix_sender._response as _response
+import asyncio_zabbix_sender._measurements as _measurements
+import asyncio_zabbix_sender._protocol as _protocol
+import asyncio_zabbix_sender._response as _response
 
 
 class ZabbixSender:
