@@ -70,6 +70,23 @@ def test_measurements_with_clock():
     assert "ns" not in representation
 
 
+def test_measurements_from_constructor():
+    measurement = Measurement(
+        host="zabbix-sender-host",
+        key="trapper.measurement",
+        value="unit test",
+    )
+    measurements = Measurements([measurement])
+
+    representation = measurements.as_dict()
+
+    assert representation["request"] == "sender data"
+    assert len(representation["data"]) == 1
+    assert representation["data"][0] == measurement.as_dict()
+    assert "clock" not in representation
+    assert "ns" not in representation
+
+
 def test_measurements_as_bytes():
     measurements = Measurements()
 

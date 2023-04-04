@@ -20,12 +20,13 @@ from asyncio_zabbix_sender import ZabbixSender, Measurements, Measurement
 
 sender = ZabbixSender("example.com")
 
-measurements = Measurements()
-measurements.add_measurement(Measurement(
-    "vm-game-server", "cheat[doom]", "idkfa", datetime.datetime.utcnow()
-))
+measurements = Measurements([
+    Measurement(
+        "vm-game-server", "cheat.used[doom,player1]", "idkfa", datetime.datetime.utcnow()
+    )
+])
 
-await sender.send(measurements)
+response = await sender.send(measurements)
 ```
 
 

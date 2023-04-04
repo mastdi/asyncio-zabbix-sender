@@ -62,6 +62,7 @@ class Measurement:
 class Measurements:
     def __init__(
         self,
+        measurements: typing.Optional[typing.List[Measurement]] = None,
         clock: typing.Optional[typing.Union[int, datetime.datetime]] = None,
         ns: typing.Optional[int] = None,
     ):
@@ -70,7 +71,10 @@ class Measurements:
         :param clock: Optional time for this collection.
         :param ns: Optional nanoseconds for this collection.
         """
-        self._measurements: typing.List[Measurement] = []
+        if measurements is None:
+            self._measurements: typing.List[Measurement] = []
+        else:
+            self._measurements = measurements
         self.clock = clock
         self.ns = ns
         if isinstance(self.clock, datetime.datetime):
