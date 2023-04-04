@@ -12,6 +12,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 import asyncio
+import logging
 import typing
 
 import asyncio_zabbix_sender._measurements as _measurements
@@ -38,6 +39,7 @@ class ZabbixSender:
         self.zabbix_host = zabbix_host
         self.zabbix_port = zabbix_port
         self.use_compression = use_compression
+        self.logger = logging.getLogger("asyncio-zabbix-sender")
 
     async def _open_connection(
         self,
@@ -57,7 +59,10 @@ class ZabbixSender:
         :return: The response from Zabbix.
         """
         packet = _protocol.create_packet(bytes(measurements), self.use_compression)
-
+        self.logger.debug(
+            "Created packet from measurements. Used compression: %r.",
+            self.use_compression,
+        )
         return await self.send_packet(packet)
 
     async def send_packet(self, packet: bytes) -> _response.ZabbixResponse:
@@ -69,16 +74,26 @@ class ZabbixSender:
         reader, writer = await self._open_connection()
 
         # Write the packet to Zabbix
+        self.logger.debug("Sending packet: %r", packet)
         writer.write(packet)
         await writer.drain()
 
         # Read the response
         response = await _protocol.read_response(reader)
+        self.logger.debug("Got response: %r", response.data)
 
         # Close the connection to Zabbix
+        self.logger.info(
+            "Packet sent: %d bytes. Response data received: %d bytes. "
+            "Response flags %d.",
+            len(packet),
+            response.data_length,
+            response.flags,
+        )
         writer.close()
         await writer.wait_closed()
 
         # Parse the response
         payload = _protocol.parse_packet_parts(response)
+        self.logger.debug("Parsed response payload: %r", payload)
         return _response.response_from_payload(payload)

@@ -13,6 +13,7 @@
 #  limitations under the License.
 import decimal
 import json
+import zlib
 
 import pytest
 
@@ -33,7 +34,7 @@ async def test_send():
     )
     reader = MockStreamReader(response)
     writer = MockStreamWriter()
-    sender = ZabbixSender("mock-host", use_compression=False)
+    sender = ZabbixSender("mock-host", use_compression=True)
     sender._open_connection = create_open_connection_mock(reader, writer)
 
     measurements = Measurements()
@@ -44,4 +45,4 @@ async def test_send():
     assert response.failed == 2
     assert response.total == 43
     assert response.time == decimal.Decimal("31.41592")
-    assert writer.received_bytes.endswith(bytes(measurements))
+    assert writer.received_bytes.endswith(zlib.compress(bytes(measurements)))

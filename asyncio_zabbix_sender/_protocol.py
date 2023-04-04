@@ -13,6 +13,7 @@
 #  limitations under the License.
 import asyncio
 import json
+import logging
 import struct
 import typing
 import zlib
@@ -41,6 +42,9 @@ def create_packet(request: bytes, use_compression: bool) -> bytes:
         flags |= 0x02
         data = zlib.compress(request)
         reserved = len(request)
+        logging.getLogger("asyncio-zabbix-sender").debug(
+            "Compressed packet: %d bytes. Original %d.", len(data), len(request)
+        )
 
     return protocol + struct.pack("<BII", flags, len(data), reserved) + data
 
