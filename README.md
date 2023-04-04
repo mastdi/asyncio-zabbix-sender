@@ -14,6 +14,9 @@ pip install asyncio-zabbix-sender
 
 ## Usage
 
+The measurements for the [Zabbix trapper item(s)](https://www.zabbix.com/documentation/6.0/en/manual/config/items/itemtypes/trapper) can be sent using a high-level API.
+The `Measurements` object is a collection of measurements.
+The measurements can both be added via the constructor (as per the example below), but also dynamically via the `add_measurement` method.
 ```python
 import datetime
 from asyncio_zabbix_sender import ZabbixSender, Measurements, Measurement
@@ -27,6 +30,19 @@ measurements = Measurements([
 ])
 
 response = await sender.send(measurements)
+```
+
+This package can also be used on a lower level to send packets directly.
+```python
+from asyncio_zabbix_sender import create_packet, ZabbixSender
+
+packet = create_packet(
+    request=b'{"request":"sender data","data":[{"host":"<hostname>","key":"trap","value":"test value"}]}',
+    use_compression=True
+)
+
+sender = ZabbixSender("example.com")
+response = await sender.send_packet(packet)
 ```
 
 ## Logging
@@ -53,9 +69,17 @@ DEBUG    asyncio-zabbix-sender:_zabbix_sender.py:97 Parsed response payload: {'r
 Note that only a summary of the packet that are send and the response received are logged as informational.
 Everything else is logged at debug level.
 
+The INFO log entry contains the response flags.
+A response flag are set by:
+- 0x01 - Zabbix communications protocol
+- 0x02 - If compression is used
+- 0x04 - If the response is a large packet
+
 ## Road map
 The following improvements are planned (not necessary in order):
 
 - Encryption between the sender and Zabbix
+  - connection using TLS and a pre-shared key (psk)
+  - connection using TLS and a certificate (cert)
 - Better error handling
 - More documentation
