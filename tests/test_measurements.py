@@ -112,7 +112,10 @@ def test_measurements_repr():
 
 def test_measurements_repr_no_time():
     expected_measurements = Measurements(
-        measurements=[Measurement("host", "key", "value", clock=601886899)],
+        measurements=[
+            Measurement("host", "key", "value", clock=601886899),
+            Measurement("h", "k", "v"),
+        ],
     )
 
     representation = repr(expected_measurements)
@@ -121,3 +124,14 @@ def test_measurements_repr_no_time():
     assert expected_measurements.clock == measurements.clock
     assert expected_measurements.ns == measurements.ns
     assert expected_measurements._measurements == expected_measurements._measurements
+
+
+def test_measurements_length():
+    measurements = Measurements(
+        measurements=[
+            Measurement("host", "key", "value", clock=601886899),
+            Measurement("h", "k", "v"),
+        ],
+    )
+
+    assert len(measurements) == 2

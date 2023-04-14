@@ -140,3 +140,10 @@ class Measurements:
             parts.pop()
         parts.append(")")
         return "".join(parts)
+
+    def __len__(self) -> int:
+        """Return the number of measurements currently in the collection.
+
+        :return: Number of measurements
+        """
+        return len(self._measurements)
