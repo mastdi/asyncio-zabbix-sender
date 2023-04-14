@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "asyncio-zabbix-sender"
-version = "0.1.1"
+version = "0.1.2"
 description = "Asyncio implementation of the Zabbix Sender protocol"
 repository = "https://github.com/mastdi/asyncio-zabbix-sender"
 authors = ["Martin Storgaard Dieu <martin@storgaarddieu.com>"]
