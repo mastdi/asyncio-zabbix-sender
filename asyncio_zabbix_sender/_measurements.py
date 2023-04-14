@@ -118,3 +118,40 @@ class Measurements:
         :return: Zabbix request as bytes.
         """
         return str(self).encode("utf-8")
+
+    def __repr__(self) -> str:
+        """Represent the measurements as the object in the current state.
+
+        :return: Representation of the current state
+        """
+        parts = [type(self).__name__, "("]
+        if len(self._measurements) > 0:
+            parts.append("measurements=[")
+            parts.append(
+                ", ".join([repr(measurement) for measurement in self._measurements])
+            )
+            parts.append("], ")
+        if self.clock is not None:
+            parts.append(f"clock={self.clock}")
+            parts.append(", ")
+        if self.ns is not None:
+            parts.append(f"ns={self.ns}")
+        if parts[-1] == ", ":
+            parts.pop()
+        parts.append(")")
+        return "".join(parts)
+
+    def __len__(self) -> int:
+        """Return the number of measurements currently in the collection.
+
+        :return: Number of measurements
+        """
+        return len(self._measurements)
+
+    def __iter__(self) -> typing.Generator[Measurement, None, None]:
+        """Iterate all measurements
+
+        :return: Generator with all measurements
+        """
+        for measurement in self._measurements:
+            yield measurement
