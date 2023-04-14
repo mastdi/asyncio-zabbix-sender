@@ -135,3 +135,15 @@ def test_measurements_length():
     )
 
     assert len(measurements) == 2
+
+
+def test_measurements_iter():
+    expected_measurements = [
+        Measurement("host", "key", "value", clock=601886899),
+        Measurement("h", "k", "v"),
+    ]
+    measurements = Measurements(measurements=expected_measurements)
+
+    generated_measurements = [measurement for measurement in measurements]
+
+    assert expected_measurements == generated_measurements

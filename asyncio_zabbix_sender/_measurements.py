@@ -147,3 +147,11 @@ class Measurements:
         :return: Number of measurements
         """
         return len(self._measurements)
+
+    def __iter__(self) -> typing.Generator[Measurement, None, None]:
+        """Iterate all measurements
+
+        :return: Generator with all measurements
+        """
+        for measurement in self._measurements:
+            yield measurement
