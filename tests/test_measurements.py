@@ -93,3 +93,31 @@ def test_measurements_as_bytes():
     representation = bytes(measurements)
 
     assert b'{"data":[],"request":"sender data"}' == representation
+
+
+def test_measurements_repr():
+    expected_measurements = Measurements(
+        measurements=[Measurement("host", "key", "value", clock=601886899)],
+        clock=574066099,
+        ns=8123116,
+    )
+
+    representation = repr(expected_measurements)
+
+    measurements = eval(representation)
+    assert expected_measurements.clock == measurements.clock
+    assert expected_measurements.ns == measurements.ns
+    assert expected_measurements._measurements == expected_measurements._measurements
+
+
+def test_measurements_repr_no_time():
+    expected_measurements = Measurements(
+        measurements=[Measurement("host", "key", "value", clock=601886899)],
+    )
+
+    representation = repr(expected_measurements)
+
+    measurements = eval(representation)
+    assert expected_measurements.clock == measurements.clock
+    assert expected_measurements.ns == measurements.ns
+    assert expected_measurements._measurements == expected_measurements._measurements
