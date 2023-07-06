@@ -37,6 +37,8 @@ class ZabbixSender:
         :param use_compression: If True, then measurement collection will be compressed
                                 and otherwise the packet will be sent without
                                 compression. This does not apply if send_packet is used.
+        :param ssl_context: The SSL context to be used to connect to Zabbix.
+                            Default is no encryption.
         """
         self.zabbix_host = zabbix_host
         self.zabbix_port = zabbix_port
