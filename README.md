@@ -78,8 +78,5 @@ A response flag are set by:
 ## Road map
 The following improvements are planned (not necessary in order):
 
-- Encryption between the sender and Zabbix
-  - connection using TLS and a pre-shared key (psk)
-  - connection using TLS and a certificate (cert)
 - Better error handling
-- More documentation
+- More documentation (how to set up ssl among other things)
