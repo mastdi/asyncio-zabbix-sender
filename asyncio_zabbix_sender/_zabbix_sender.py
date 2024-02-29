@@ -1,4 +1,4 @@
-#  Copyright (c) 2023. Martin Storgaard Dieu <martin@storgaarddieu.com>
+#  Copyright (c) 2024. Martin Storgaard Dieu <martin@storgaarddieu.com>
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
 #  limitations under the License.
 import asyncio
 import logging
+import ssl
 import typing
 
 import asyncio_zabbix_sender._measurements as _measurements
@@ -26,6 +27,7 @@ class ZabbixSender:
         zabbix_host: str,
         zabbix_port: typing.Union[int, str] = 10051,
         use_compression=True,
+        ssl_context: typing.Optional[ssl.SSLContext] = None,
     ):
         """The Zabbix sender for sending either a measurement collection or a raw
         packet.
@@ -35,10 +37,13 @@ class ZabbixSender:
         :param use_compression: If True, then measurement collection will be compressed
                                 and otherwise the packet will be sent without
                                 compression. This does not apply if send_packet is used.
+        :param ssl_context: The SSL context to be used to connect to Zabbix.
+                            Default is no encryption.
         """
         self.zabbix_host = zabbix_host
         self.zabbix_port = zabbix_port
         self.use_compression = use_compression
+        self.ssl_context = ssl_context
         self.logger = logging.getLogger("asyncio-zabbix-sender")
 
     async def _open_connection(
@@ -48,7 +53,9 @@ class ZabbixSender:
 
         :return: A stream reader and writer pair.
         """
-        return await asyncio.open_connection(self.zabbix_host, self.zabbix_port)
+        return await asyncio.open_connection(
+            self.zabbix_host, self.zabbix_port, ssl=self.ssl_context
+        )
 
     async def send(
         self, measurements: _measurements.Measurements
